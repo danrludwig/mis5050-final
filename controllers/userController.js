@@ -38,18 +38,15 @@ module.exports = {
 
     create: (req, res, next) => {
         // console.log("_________________here")
-        // if (req.skip).next();
         let newUser = new User(getUserParams(req.body));
         console.log(newUser);
         User.register(newUser, req.body.password, (error, user) => {
             console.log("here------------------------>");
             if (user) {
                 console.log("what========================")
-                // req.flash("success", `Created ${user.firstName} ${user.lastName}'s account successfully`);
                 res.locals.redirect = "/user/login";
                 next();
             } else {
-                // req.flash("error", `Failed to create user account.\n ${error.message}.`);
                 console.log(error.message);
                 res.locals.redirect = "/user/login";
                 next();
@@ -90,35 +87,11 @@ module.exports = {
 
     authenticate: passport.authenticate("local", {
         failureRedirect: "/user/login",
-        // failureFlash: "Failed to login.",
         successRedirect: "/",
-        // successFlash: "Logged in!"
       }),
-
-    // validate: (req, res, next) => {
-    //     console.log(req.body);
-    //     req
-    //         .check("email")
-    //         .normalizeEmail({ all_lowercase: true })
-    //         .trim();
-    //     req.check("email", "Email is invalid").isEmail();
-    //     req.check("password", "Password cannot be empty").notEmpty();
-
-    //     req.getValidationResult()
-    //     .then(error => {
-    //         if (!error.isEmpty()) {
-    //             let messagees = error.array().map(a => a.msg);
-    //             req.skip = true;
-    //             req.flash("error", messages.join(" and "));
-    //             res.locals.redirect = "/users/new";
-    //         } 
-    //         next();
-    //     });
-    // },
 
     logout: (req, res, next) => {
         req.logout();
-        // req.flash("success", "You have been logged out!");
         res.locals.redirect = "/";
         next();
     },

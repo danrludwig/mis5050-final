@@ -80,11 +80,6 @@ module.exports = {
         res.render("users/login");
     },
 
-    printHi: (req, res, next) => {
-        console.log("hiiiiiii");
-        next();
-    },
-
     authenticate: passport.authenticate("local", {
         failureRedirect: "/user/login",
         successRedirect: "/",
@@ -94,60 +89,6 @@ module.exports = {
         req.logout();
         res.locals.redirect = "/";
         next();
-    },
-
-    apiAuthenticate: (req, res, next) => {
-        passport.authenticate("local", (errors, user) => {
-            if (user) {
-                let signedToken = jsonWebToken.sign(
-                    {
-                        data: user._id,
-                        exp: new Date().setDate(new Date().getDate() + 1)
-                    },
-                    "some_secret_passphrase"
-                );
-                res.join({
-                    success:true,
-                    token: signedToken 
-                });
-            } else {
-                res.json({
-                    success: false,
-                    message: "User not authenticated."
-                });
-            }
-        })(req, res, next);
-    },
-
-    verifyJWT: (req, res, next) => {
-         let token = req.headers.token;
-         if (token) {
-             jsonWebToken.verify(token, "some_secret_passphrase", (errors, payload) => {
-                if (payload) {
-                    User.findById(payload.data).then(user => {
-                        if (user) {
-                            next();
-                        } else {
-                            res.status(httpStatus.FORBIDDEN).json({
-                                error: true,
-                                message: "No User account found."
-                            });
-                        }
-                    });
-                } else {
-                    res.status(httpStatus.UNAUTHORIZED).json({
-                        error: true,
-                        message: "Can't verify API token."
-                    });
-                    next();
-                }
-             });
-         } else {
-             res.status(httpStatus.UNAUTHORIZED).json({
-                 erro: true,
-                 message: "Provide token"
-             });
-         }
     },
 
     verifyAdmin: (req, res, next) => {

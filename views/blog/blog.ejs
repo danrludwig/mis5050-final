@@ -1,0 +1,23 @@
+
+		<h1><span>blog</span></h1>
+		<div>
+			<ul>
+				<% posts.forEach(post => { %> 
+				<li>
+					<a href="/blog/<%= post._id %>" class="figure">
+						<img src="/images/<%= post.imageUrl %>" alt="">
+					</a>
+					<div>
+						<h3><%= post.title %></h3>
+						<p>
+							<%= post.summary %>
+						</p>
+						<a href="/blog/<%= post._id %>" class="more">read this</a>
+					</div>
+				</li>
+				<%})%>
+				
+			</ul>
+		</div>
+
+	

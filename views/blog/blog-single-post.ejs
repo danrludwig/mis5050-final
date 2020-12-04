@@ -1,0 +1,10 @@
+
+		<h1><span><%= dateFormat(post.datePosted, "dddd, mmmm d, yyyy h:MM TT") %></span></h1>
+		<div>
+			<img src="/images/<%= post.imageUrl %>" alt="">
+			<div class="article">
+				<h2><%= post.title %></h2>
+				<%- post.content %>
+			</div>
+		</div>
+	

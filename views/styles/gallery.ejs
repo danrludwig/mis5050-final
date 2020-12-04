@@ -1,0 +1,19 @@
+
+
+		<h1><span>style gallery</span></h1>
+		<ul class="gallery">
+			<a href="/style/new">
+				Add New Style
+			</a>
+			<br>
+			<% styles.forEach((style) => { %>
+				<li>
+					<a href="/style/<%= style._id %>">
+						<img src="images/<%= style.imageUrl %>" alt="">
+					</a>
+				</li>
+			<%})%>
+			
+		</ul>
+
+	

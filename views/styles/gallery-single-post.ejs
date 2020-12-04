@@ -1,0 +1,15 @@
+
+		<h1><span>style detail</span></h1>
+		<div>
+			<img src="/images/<%= style.imageUrl %>" alt="">
+			<div class="article">
+				<h4><%= style.title.toUpperCase(); %></h4>
+				<p>
+				<%= style.description %>
+				</p>
+				<% if (loggedIn) { %>
+					<a href="/user/<%= style._id %>/add-favorite">Add to Favorite Styles</a>
+					<% } %>
+			</div>
+		</div>
+	

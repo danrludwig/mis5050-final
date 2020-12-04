@@ -1,0 +1,67 @@
+<!doctype html>
+<!-- Website Template by freewebsitetemplates.com -->
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title><%= typeof title !== "undefined" ? title : '' %></title>
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/mobile.css" media="screen and (max-width : 568px)">
+    <link rel="shortcut icon" type="image/png" href="images/icons/icon-mustache.png"/>
+	<script type="text/javascript" src="/js/mobile.js"></script>
+</head>
+<body>
+	<div id="header">
+		<a href="/" class="logo">
+			<img src="/images/logo.jpg" alt="">
+		</a>
+		<% if (loggedIn) { %>
+			<div class="logged-in">
+				Welcome
+				<%= currentUser.firstName %>
+			</div>
+			<div class="log-out">
+				<a href="/user/logout">Log out</a>
+			</div>
+			<% } else { %>
+				<div class="login-in">
+					<a href="/user/login">Log In</a>
+				</div>
+				<% } %>
+		<ul id="navigation">
+			<li class="selected">
+				<a href="/">home</a>
+			</li>
+			<li>
+				<a href="/about">about</a>
+			</li>
+			<li>
+				<a href="/gallery">gallery</a>
+			</li>
+			<li>
+				<a href="/blog">blog</a>
+			</li>
+			<li>
+				<a href="/contacts/new">contact</a>
+            </li>
+			<% if (loggedIn) { %>
+				<li>
+					<a href="/contacts">contact requests</a>
+				</li>
+				<li>
+					<a href="/user/favorite-styles">favorite styles</a>
+				</li>
+			<% } %>
+		</ul>
+	</div>
+	<div id="body">
+		<%- body %>
+	</div>
+	<div id="footer">
+		<div>
+			<p>&copy; 2023 by Mustacchio. All rights reserved.</p>
+			<%- include("partials/_socialmedia.ejs") %>
+		</div>
+	</div>
+</body>
+</html>

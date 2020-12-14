@@ -45,9 +45,11 @@
 				<a href="/contacts/new">contact</a>
             </li>
 			<% if (loggedIn) { %>
-				<li>
-					<a href="/contacts">contact requests</a>
-				</li>
+				<% if (currentUser.isAdmin) { %>
+					<li>
+						<a href="/contacts">contact requests</a>
+					</li>
+				<% } %>
 				<li>
 					<a href="/user/favorite-styles">favorite styles</a>
 				</li>

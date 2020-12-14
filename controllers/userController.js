@@ -41,9 +41,7 @@ module.exports = {
         let newUser = new User(getUserParams(req.body));
         console.log(newUser);
         User.register(newUser, req.body.password, (error, user) => {
-            console.log("here------------------------>");
             if (user) {
-                console.log("what========================")
                 res.locals.redirect = "/user/login";
                 next();
             } else {
@@ -141,12 +139,50 @@ module.exports = {
          }
     },
 
-    userList : (req, res, next) => {
+    userList: (req, res, next) => {
         User.find({})
         .then((users) => {
             res.render("users/list", {users: users});
         })
+        .catch(error => {
+            console.log(error.message);
+            next(error);
+        })
+    },
+
+    updateUsers: (req, res, next) => {
+        let users = req.body.users;
+        users.forEach(user => {
+            User.findById(user._id)
+            .then(userInfo => {
+                let userParams = {
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                isAdmin: user.isAdmin,
+                favoriteStyles: userInfo.favoriteStyles
+                }
+                User.findByIdAndUpdate(user._id, {
+                    $set: userParams
+                })
+                .then(user => {
+                    console.log(user);
+                    next();
+                })
+            })
+        })
     }
+    // index: (req, res, next) => {
+    //     User.find()
+    //     .then(users => {
+    //         res.locals.users = users;
+    //         next();
+    //     })
+    //     .catch(error => {
+    //         console.log(`Error fetching users: ${error.message}`);
+    //         next(error);
+    //     });
+    // },
 
     // update: (req, res, next) => {
     //     let userId = req.params.id;

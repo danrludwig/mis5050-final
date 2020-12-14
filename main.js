@@ -9,7 +9,8 @@ const express = require("express"),
   passport = require("passport"),
   expressSession = require("express-session"),
   User = require("./models/user"),
-  methodOverride = require("method-override");
+  methodOverride = require("method-override"),
+  axios = require("axios");
 
 // Controllers
 const homeController = require("./controllers/homeController");
@@ -91,9 +92,15 @@ app.get("/user/logout", userController.logout, userController.redirectView);
 app.get("/user/:id/add-favorite", userController.addFavorite, userController.redirectView);
 app.get("/user/favorite-styles", userController.getFavorites);
 app.get("/user/list", userController.userList);
+app.put("/user/list/update", userController.updateUsers)
+
 
 // API routes
-app.get("/api/styles", apiController.getStyles);
+app.get("/api/token", apiController.getToken);
+app.get("/api/styles", apiController.verifyToken, apiController.getStyles);
+app.get("/dog", apiController.getDogs);
+
+app.get("/")
 
 // Error routes
 app.use(errorController.handleErrors);

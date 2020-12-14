@@ -1,4 +1,5 @@
 <h1><span>user list</span></h1>
+<form action="/user/list/update" method="POST">
 <table>
     
     <thead>
@@ -8,18 +9,22 @@
         <th>Email</th>
         <th>Is Admin</th>
     </tr>
-</thead>
+    </thead>
 <tbody>
 
-    <% users.forEach((user) => { %>
-        <tr>
-            <td><%= user.firstName%></td>
-            <td><%= user.lastName %></td>
-            <td><%= user.email %></td>
-            <td><%= user.isAdmin %></td>
-        </tr>
 
-    <% }) %>
+    <% for (let i=0; i < users.length; i++) { %>
+        <tr>
+            <td><label for="firstName"><%= users[i].firstName%></label></td>
+            <td><label for="lastName"><%= users[i].lastName%></label></td>
+            <td><label for="email"><%= users[i].email%></label></td>
+            <td><input type="checkbox" id="isAdmin" name="isAdmin" <%= users[i].isAdmin ? "checked" : "" %>></td>
+        </tr> 
+
+    <% } %>
    
 </tbody>
 </table>
+<br>
+<button type="submit">Update</button>
+</form>
